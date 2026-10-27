@@ -1,0 +1,55 @@
+{
+  "schema": "originscope-assessment-profiles/v1",
+  "profiles": [
+    {
+      "id": "report-only-v1",
+      "version": "1.0",
+      "name": "Report only",
+      "description": "Records the assessed vulnerability posture without blocking on a risk threshold.",
+      "rules": [
+        {
+          "id": "analysis-complete",
+          "type": "analysis-complete",
+          "enforcement": "blocking",
+          "description": "A structured analysis result must be available."
+        },
+        {
+          "id": "active-cves-observed",
+          "type": "active-cve-count",
+          "enforcement": "informational",
+          "description": "Records CVEs that remain active in the assessed inventory."
+        }
+      ],
+      "waivers": []
+    },
+    {
+      "id": "critical-exposure-gate-v1",
+      "version": "1.0",
+      "name": "Critical exposure gate",
+      "description": "Fails when an active Critical CVE is present; other severity levels remain visible in the evidence bundle.",
+      "rules": [
+        {
+          "id": "analysis-complete",
+          "type": "analysis-complete",
+          "enforcement": "blocking",
+          "description": "A structured analysis result must be available."
+        },
+        {
+          "id": "no-critical-active-cves",
+          "type": "active-cve-count",
+          "impact": "CRITICAL",
+          "maximum": 0,
+          "enforcement": "blocking",
+          "description": "No Critical CVE may remain active in the assessed inventory."
+        },
+        {
+          "id": "origin-evidence-for-active-cves",
+          "type": "origin-evidence",
+          "enforcement": "advisory",
+          "description": "Records whether active CVEs retain BOMQ/OSIDB origin evidence."
+        }
+      ],
+      "waivers": []
+    }
+  ]
+}

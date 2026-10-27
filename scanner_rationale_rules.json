@@ -1,0 +1,27 @@
+{
+  "schema": "cve-report.scanner-rationale-rules/v1",
+  "grype": {
+    "human_table": {
+      "summary": "Grype's table reports the package/CVE pair but omits matcher evidence.",
+      "limitation": "Use Grype JSON output to retain matchDetails, matcher, namespace, and version-constraint evidence."
+    },
+    "match_types": {
+      "exact-direct-match": {
+        "summary": "Grype directly matched the discovered package to its vulnerability record.",
+        "limitation": "The scanner's package match is evidence of its decision, not proof of Red Hat product affectedness."
+      },
+      "exact-indirect-match": {
+        "summary": "Grype matched through an indirect package relationship.",
+        "limitation": "Review the direct and indirect package relationship before treating this as a product finding."
+      },
+      "cpe-match": {
+        "summary": "Grype matched a CPE association from its vulnerability data.",
+        "limitation": "A CPE match is weaker than a Red Hat RPM advisory match and can require product-specific review."
+      },
+      "default": {
+        "summary": "Grype emitted matcher evidence for this package/CVE pair.",
+        "limitation": "Review the retained matcher evidence before treating this as a product-specific conclusion."
+      }
+    }
+  }
+}
